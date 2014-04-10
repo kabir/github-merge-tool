@@ -166,5 +166,4 @@ public class ApplicationConfigBean {
         users.put(userName, Util.md5(password));
         Util.writeProperties(users, usersFile);
     }
-
 }
