@@ -1,0 +1,36 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+   xmlns:ui="http://java.sun.com/jsf/facelets"
+   xmlns:h="http://java.sun.com/jsf/html"
+   xmlns:f="http://java.sun.com/jsf/core">
+
+<ui:composition template="template.xhtml">
+  <ui:define name="content">
+    <div class="row-fluid">
+     <div class="col-md-3"> &nbsp;</div>
+     <div class="col-md-6">
+            <h3 class="text-center">New user</h3>
+            <p>Please enter the user details</p> 
+            <h:messages />
+         <h:form id="newUserForm">
+             <div class="form-group">
+                 <h:outputLabel for="username">Username:</h:outputLabel>
+                 <h:inputText id="username" styleClass="form-control" value="#{credentials.username}" />
+             </div>
+             <div class="form-group">
+                 <h:outputLabel for="password">Password:</h:outputLabel>
+                 <h:inputSecret id="password" styleClass="form-control" value="#{credentials.password}" />
+             </div>
+             <div class="form-group">
+                 <h:outputLabel for="admin">Admin:</h:outputLabel>
+                 <h:selectBooleanCheckbox id="admin" styleClass="form-control" value="#{credentials.admin}" />
+             </div>
+             <div class="form-group">
+                  <h:commandButton id="login" styleClass="btn btn-default" value="Add User" action="#{userManager.addUser(credentials)}"/>
+             </div>
+         </h:form>
+     </div>
+   </div>
+ </ui:define>
+</ui:composition>
+</html>

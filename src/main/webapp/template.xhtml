@@ -1,0 +1,102 @@
+<!--
+    JBoss, Home of Professional Open Source
+    Copyright 2013, Red Hat, Inc. and/or its affiliates, and individual
+    contributors by the @authors tag. See the copyright.txt in the
+    distribution for a full listing of individual contributors.
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+    http://www.apache.org/licenses/LICENSE-2.0
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core">
+
+<!-- The template for our app, defines some regions -->
+
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>Git Merger Utility</title>
+
+    <!-- Bootstrap -->
+    <link href="bs/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="bs/css/bootstrap-theme.min.css" rel="stylesheet"/>
+    <style>
+        body { padding-top: 70px; }
+        .table > thead.custom-header,
+        .table > thead > tr.custom-header, 
+        .table > thead > tr > th.custom-header {
+            background-color: #ccccff;
+        }
+        .table > thead.custom-header:hover,
+        .table > thead > tr.custom-header:hover, 
+        .table > thead > tr > th.custom-header:hover {
+            background-color: #bbbbff;
+        }
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <h:link class="navbar-brand" outcome="/home.xhtml" value="Git Merger Utility"/>
+    </div>
+    
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+      
+        <!-- TODO select the active one 
+            <li class="active"><h:link outcome="/home.xhtml" value="Home"/></li>
+        -->
+        <li><h:link outcome="/home.xhtml" value="Home"/></li>
+            <h:panelGroup rendered="#{login.loggedIn}">
+                <h:panelGroup rendered="#{login.admin}">
+                    <li><h:link outcome="/manage-users.xhtml" value="Manage Users"/></li>
+                </h:panelGroup>
+                <li><h:link outcome="/settings.xhtml" value="Settings"/></li>
+                <li><h:link outcome="/repositories.xhtml" value="My Repositories"/></li>
+            </h:panelGroup>
+      </ul>
+      
+        <h:panelGroup rendered="#{!login.loggedIn}">
+          <ul class="nav navbar-nav navbar-right">
+            <li><h:link outcome="/login.xhtml" value="Log In"/></li>
+          </ul>
+        </h:panelGroup>
+        <h:panelGroup rendered="#{login.loggedIn}">
+                <!-- Do logout link, currently looks funny -->
+            <h:form styleClass="navbar-form navbar-right"><h:commandLink action="#{login.logout}" value="Log Out"/></h:form>
+        </h:panelGroup>
+    </div> <!-- /.navbar-collapse -->
+  </div> <!-- /.container-fluid -->
+</nav>
+
+    <div class="container-fluid">
+        <ui:insert name="content" />
+    </div>
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="bs/js/bootstrap.min.js"></script>
+</body>
+</html>
+

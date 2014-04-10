@@ -1,0 +1,45 @@
+body {
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    font-size: 13px;
+    color:#333
+}
+
+p {
+    /* padding: 10px; */
+}
+
+#container {
+    margin: 0 auto;
+    width: 1000px;
+}
+
+#header {
+    float: left;
+    height: 75px;
+    width: 100%;
+    background: #CCCCCC;
+}
+
+#content {
+    float: left;
+    background: #FFFFEE;
+    width: 600px;
+    padding: 10px;
+}
+
+#sidebar {
+    background: #DDDDDD;
+    width: 150px;
+    float: left;
+}
+
+.table-header {
+    background: #111111;
+    color: #FFFFFF;
+}
+.tablerow1 {
+    background-color: #BBBBFF;
+}
+.tablerow2 {
+    background-color: #EEEEFF;
+}

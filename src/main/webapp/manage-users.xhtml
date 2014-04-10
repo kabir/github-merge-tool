@@ -1,0 +1,59 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+   xmlns:ui="http://java.sun.com/jsf/facelets"
+   xmlns:h="http://java.sun.com/jsf/html"
+   xmlns:f="http://java.sun.com/jsf/core">
+
+<ui:composition template="template.xhtml">
+  <ui:define name="content">
+        <h3 class="text-center">Users</h3>
+        <p>These are your git merger users:</p>
+          <h:form>
+              <!--  headerClass="table-header" rowClasses="tablerow1, tablerow2" -->
+              <h:dataTable value="#{userManager.users}" var="u" styleClass="table table-hover table-striped" headerClass="custom-header">
+                 <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="User"/>
+                    </f:facet>
+                    <b>#{u.userName}</b>
+                 </h:column>
+                 <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="Admin"/>
+                    </f:facet>
+                    <h:outputText value="y" rendered="#{u.admin}"/>
+                    <h:outputText value="n" rendered="#{!u.admin}"/>
+                 </h:column>
+                 <h:column>
+                    <f:facet name="header">
+                        &nbsp;
+                    </f:facet>
+                    <h:panelGroup rendered="#{!userManager.isSelf(u)}">
+                       <div class="btn-group">
+                          <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown">
+                            <span class="glyphicon glyphicon-cog"/> <span class="caret"></span>
+                          </button>
+                          <ul class="dropdown-menu pull-right" role="menu">
+	                        <h:panelGroup rendered="#{u.admin}">
+                                <li><h:commandLink value="Make Non-Admin" action="#{userManager.toggleAdmin(u.userName)}"/></li>
+	                        </h:panelGroup>                      
+	                        <h:panelGroup rendered="#{!u.admin}">
+                                <li><h:commandLink value="Make Admin" action="#{userManager.toggleAdmin(u.userName)}"/></li>
+        	                </h:panelGroup>
+                            <li>
+                                <h:link value="Change Password" outcome="/admin-change-password.xhtml">
+                                    <f:param name="user" value="#{u.userName}"/>
+                                </h:link>
+                            </li>
+	                        <li class="divider"></li>
+	                        <li><h:commandLink value="Delete '#{u.userName}'" action="#{userManager.deleteUser(u.userName)}" /></li>
+	                      </ul>                     
+                       </div>
+                    </h:panelGroup>
+                 </h:column>
+              </h:dataTable>
+              <h:link value="New user" outcome="/new-user.xhtml"/>
+          </h:form>  
+   </ui:define>
+</ui:composition>
+</html>

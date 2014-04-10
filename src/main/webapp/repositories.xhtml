@@ -1,0 +1,54 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+   xmlns:ui="http://java.sun.com/jsf/facelets"
+   xmlns:h="http://java.sun.com/jsf/html"
+   xmlns:f="http://java.sun.com/jsf/core">
+
+<ui:composition template="template.xhtml">
+  <ui:define name="content">
+        <h3 class="text-center">Clones</h3>
+        <p>These are your git clones:</p>
+          <h:form>
+              <!--  headerClass="table-header" rowClasses="tablerow1, tablerow2" -->
+              <h:dataTable value="#{gitRepositoryManager.checkouts}" var="c" styleClass="table table-hover table-striped" headerClass="custom-header">
+                 <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="Name"/>
+                    </f:facet>
+                    <b><h:commandLink value="#{c.name}" action="#{gitRepositoryManager.viewCheckout(c.name)}" /></b>
+                 </h:column>
+                 <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="Repository"/>
+                    </f:facet>
+                    <h:outputText value="#{c.gitUrlShort}" />
+                 </h:column>
+                 <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="Main Branch"/>
+                    </f:facet>
+                    <h:outputText value="#{c.mainBranch}" />
+                 </h:column>
+                 <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="Actions"/>
+                    </f:facet>
+                    <div class="btn-group">
+					  <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown">
+					    <span class="glyphicon glyphicon-cog"/> <span class="caret"></span>
+					  </button>
+					  <ul class="dropdown-menu pull-right" role="menu">
+					    <li><h:commandLink value="View" action="#{gitRepositoryManager.viewCheckout(c.name)}" /></li>
+					    <li class="divider"></li>
+					    <li><h:commandLink value="Nuke clone" action="#{gitRepositoryManager.deleteCheckout(c.name)}" /></li>
+					  </ul>
+					</div>
+                 </h:column>
+              </h:dataTable>
+              <h:commandLink value="Clone a new repository" action="#{gitRepositoryManager.initForClone()}" rendered="#{login.loggedIn}"/>
+          </h:form>  
+      
+
+   </ui:define>
+</ui:composition>
+</html>

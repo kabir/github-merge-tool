@@ -1,0 +1,41 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+   xmlns:ui="http://java.sun.com/jsf/facelets"
+   xmlns:h="http://java.sun.com/jsf/html"
+   xmlns:f="http://java.sun.com/jsf/core">
+
+<ui:composition template="template.xhtml">
+   <ui:define name="content">
+      <div class="row-fluid">
+          <h3 class="text-center">Review Merges for #{gitRepositoryManager.gitRepositoryDetails.name}</h3>
+          <h:messages/>
+          <p>The following pull requests have been merged to <b>#{gitRepositoryManager.gitRepositoryDetails.testingBranch}</b>.</p>
+	      <ul>
+	        <ui:repeat value="#{mergeIds.pullRequestInfos}" var="prInfo">
+	            <li><a href="#{prInfo.url}">##{prInfo.id} </a> - <h:outputText value="#{prInfo.title}" /> (<h:outputText value="#{prInfo.state}" />)</li>
+	        </ui:repeat>
+	      </ul>          
+	      <p>The state of this merge is: <b><h:outputText value="#{mergeIds.stateString}"/></b> <h:outputText value=" at #{mergeIds.name}" rendered="#{!mergeIds.open}"/></p>
+      </div>    
+      <div class="row-fluid">
+	     <h:panelGrid rendered="#{mergeIds.open}">
+	        <h:form>
+	          <p>Now do you want to:</p>
+	          <ul>
+	            <li><h:commandLink value="Test" action="#{mergeManager.pushToTestingBranch}" /> - this will push the contents 
+	                of the <b>#{gitRepositoryManager.gitRepositoryDetails.testingBranch}</b> testing branch to the remote so that it gets built and 
+	                tested on the CI server. This active merge will be left open, so you can come back and close it later.</li>
+	            <li><h:commandLink value="Merge" action="#{mergeManager.closeAndPushMerge}" /> - this will merge the contents 
+	                of the <b>#{gitRepositoryManager.gitRepositoryDetails.testingBranch}</b> testing branch to the main 
+	                <b>#{gitRepositoryManager.gitRepositoryDetails.mainBranch}</b> branch, and then push the main branch up to the remote. 
+	                This active merge will then get closed.</li>
+	            <li><h:commandLink value="Close" action="#{mergeManager.closeMerge}" /> - this active merge will then get closed.
+	                Use the links from the overview of the <b>#{gitRepositoryManager.gitRepositoryDetails.name}</b> repository to reset the branches to 
+	                the proper states.</li>
+	          </ul> 
+	        </h:form>       
+	     </h:panelGrid>
+      </div>    
+   </ui:define>
+</ui:composition>
+</html>

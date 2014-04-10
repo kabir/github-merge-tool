@@ -12,9 +12,32 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>1.7</maven.compiler.source>
     	<maven.compiler.target>1.7</maven.compiler.target>
+    	
+    	<version.war.plugin>2.3</version.war.plugin>
+    	<version.jgit>${3.3.1.201403241930-r}</version.jgit>
+    	<version.github.api>2.1.5</version.github.api>
+    	<version.javaee.api>7.0</version.javaee.api>
     </properties>
-    
+
+  <repositories>
+    <repository>
+      <id>jgit-repository</id>
+      <url>https://repo.eclipse.org/content/groups/releases/</url>
+    </repository>
+  </repositories>
+
+  <!-- Core Library -->
     <dependencies>
+        <dependency>
+            <groupId>org.eclipse.jgit</groupId>
+            <artifactId>org.eclipse.jgit</artifactId>
+            <version>3.3.1.201403241930-r</version>
+        </dependency>
+        <dependency>
+            <groupId>org.eclipse.mylyn.github</groupId>
+            <artifactId>org.eclipse.egit.github.core</artifactId>
+            <version>${version.github.api}</version>
+        </dependency>        
         <dependency>
             <groupId>javax</groupId>
             <artifactId>javaee-api</artifactId>
@@ -22,6 +45,19 @@
             <scope>provided</scope>
         </dependency>
     </dependencies>
+    <build>
+	    <plugins>
+	      <plugin>
+	            <groupId>org.apache.maven.plugins</groupId>
+	            <artifactId>maven-war-plugin</artifactId>
+	            <version>${version.war.plugin}</version>
+	            <configuration>
+	                <failOnMissingWebXml>false</failOnMissingWebXml>
+	<!--            <warName>ROOT</warName> -->
+	            </configuration>
+	        </plugin>
+	    </plugins>
+	</build>
 
 <profiles>
     <profile>
@@ -36,7 +72,7 @@
           <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
-                <version>2.3</version>
+                <version>${version.war.plugin}</version>
                 <configuration>
                     <failOnMissingWebXml>false</failOnMissingWebXml>
                     <outputDirectory>deployments</outputDirectory>

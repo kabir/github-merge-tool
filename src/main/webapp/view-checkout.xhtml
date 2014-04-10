@@ -1,0 +1,178 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+   xmlns:ui="http://java.sun.com/jsf/facelets"
+   xmlns:h="http://java.sun.com/jsf/html"
+   xmlns:f="http://java.sun.com/jsf/core">
+
+<ui:composition template="template.xhtml">
+   <ui:define name="content">
+     <div class="row">
+          <h3 class="text-center">Repository Details</h3>
+          <h:messages/>
+     </div>
+     <div class="row">
+        <div class="col-md-6">
+            <h:outputLabel value="Git repository clone name:" />
+        </div>
+        <div class="col-md-6">
+            <h:outputText value="#{gitRepositoryManager.gitRepositoryDetails.name}" />
+        </div>
+     </div>
+     <div class="row">
+        <div class="col-md-6">
+            <h:outputLabel value="Git repository URL:" />
+        </div>
+        <div class="col-md-6">
+            <h:outputText value="#{gitRepositoryManager.gitRepositoryDetails.gitUrl}" />
+        </div>
+     </div>
+     <div class="row">
+        <div class="col-md-6">
+            <h:outputLabel value="Git repository username:" />
+        </div>
+        <div class="col-md-6">
+            <h:outputText value="#{gitRepositoryManager.gitRepositoryDetails.userName}" />
+        </div>
+     </div>
+     <div class="row">
+        <div class="col-md-6">
+            <h:outputLabel value="Main Branch:" />
+        </div>
+        <div class="col-md-6">
+            <h:outputText value="#{gitRepositoryManager.gitRepositoryDetails.mainBranch}" />
+        </div>
+     </div>
+     <div class="row">
+        <div class="col-md-6">
+            <h:outputLabel value="Testing Branch:" />
+        </div>
+        <div class="col-md-6">
+            <h:outputText value="#{gitRepositoryManager.gitRepositoryDetails.testingBranch}" />
+        </div>
+     </div>
+     
+     <hr/>
+     
+     <div class="row">
+          <h3 class="text-center">Branch Details</h3>
+     </div>
+     
+     
+      <h:form id="repositoryActions">
+        <table class="table table-hover table-striped">
+            <thead class="custom-header">
+	            <tr>
+	                <th><b>Local</b></th>
+                    <th>Last SHA-1</th>
+                    <th>Last Commit</th>
+	                <th>&nbsp;</th>
+	            </tr>
+            </thead>	          
+            <tbody>  
+	            <!-- Local testing branch -->
+	            <tr>
+	                <td><b><h:outputText value="#{gitRepositoryManager.branchStatus.testingName}"/></b></td>
+	                <td><h:outputText value="#{gitRepositoryManager.branchStatus.localTestingId}"/></td>
+	                <td><h:outputText value="#{gitRepositoryManager.branchStatus.localTestingMsg}"/></td>
+	                <td>
+	                    <div class="btn-group">
+	                      <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown">
+	                        <span class="glyphicon glyphicon-cog"/> <span class="caret"></span>
+	                      </button>
+	                      <ul class="dropdown-menu pull-right" role="menu">
+	                        <li><h:commandLink value="Rebase on remote #{gitRepositoryManager.branchStatus.mainName}" action="#{gitRepositoryManager.rebaseLocalTestingOnUpstreamMain}"/></li>
+	                        <li><h:commandLink value="Rebase on remote #{gitRepositoryManager.branchStatus.testingName}" action="#{gitRepositoryManager.rebaseLocalTestingOnUpstreamTesting}"/></li>
+	                        <li><h:commandLink value="Push to remote #{gitRepositoryManager.branchStatus.testingName}" action="#{gitRepositoryManager.pushLocalTestingToUpstreamTesting}"/></li>
+	                        <li class="divider"></li>
+	                        <li><h:commandLink value="Merge --ff-only to local #{gitRepositoryManager.branchStatus.mainName}" action="#{gitRepositoryManager.mergeFFOnlyLocalTestingToLocalMain}"/></li>
+	                        <li class="divider"></li>
+	                        <li><h:commandLink value="Reset --hard to remote #{gitRepositoryManager.branchStatus.mainName}" action="#{gitRepositoryManager.resetHardLocalTestingToUpstreamMain}"/></li>
+	                        <li><h:commandLink value="Reset --hard to remote #{gitRepositoryManager.branchStatus.testingName}" action="#{gitRepositoryManager.resetHardLocalTestingToUpstreamTesting}"/></li>
+	                        <li><h:commandLink value="Push --force to remote #{gitRepositoryManager.branchStatus.testingName}" action="#{gitRepositoryManager.pushForceLocalTestingToUpstreamTesting}"/></li>
+	                      </ul>
+	                    </div>
+	                </td>
+	            </tr>
+                <!-- Local main branch -->
+                <tr>
+                    <td><b><h:outputText value="#{gitRepositoryManager.branchStatus.mainName}"/></b></td>
+                    <td><h:outputText value="#{gitRepositoryManager.branchStatus.localMainId}"/></td>
+                    <td><h:outputText value="#{gitRepositoryManager.branchStatus.localMainMsg}"/></td>
+                    <td>
+                        <div class="btn-group">
+                          <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown">
+                            <span class="glyphicon glyphicon-cog"/> <span class="caret"></span>
+                          </button>
+                          <ul class="dropdown-menu pull-right" role="menu">
+                            <li><h:commandLink value="Rebase on remote #{gitRepositoryManager.branchStatus.mainName}" action="#{gitRepositoryManager.rebaseLocalMainOnUpstreamMain}" /></li>
+                            <li><h:commandLink value="Push to remote #{gitRepositoryManager.branchStatus.mainName}" action="#{gitRepositoryManager.pushLocalMainToUpstreamMain}" /></li>
+                            <li class="divider"></li>
+                            <li><h:commandLink value="Reset --hard to remote #{gitRepositoryManager.branchStatus.mainName}" action="#{gitRepositoryManager.resetHardLocalMainToUpstreamMain}" /></li>
+                          </ul>
+                        </div>
+                    </td>
+                </tr>	            
+            </tbody>	 
+            <thead class="custom-header">
+                <tr>
+                    <th><b>Remote</b></th>
+                    <th>Last SHA-1</th>
+                    <th>Last Commit</th>
+                    <th><h:commandButton id="Fetch" styleClass="btn btn-default" value="Fetch" action="#{gitRepositoryManager.fetchUpstream}" /></th>
+                </tr>
+            </thead>
+            <tbody>    
+                <!-- Local main branch -->            
+                <tr>
+                    <td><b><h:outputText value="#{gitRepositoryManager.branchStatus.testingName}"/></b></td>
+                    <td><h:outputText value="#{gitRepositoryManager.branchStatus.remoteTestingId}"/></td>
+                    <td><h:outputText value="#{gitRepositoryManager.branchStatus.remoteTestingMsg}"/></td>
+                    <td>&nbsp;</td>
+                </tr>
+                <!-- Remote main branch -->            
+                <tr>
+                    <td><b><h:outputText value="#{gitRepositoryManager.branchStatus.mainName}"/></b></td>
+                    <td><h:outputText value="#{gitRepositoryManager.branchStatus.remoteMainId}"/></td>
+                    <td><h:outputText value="#{gitRepositoryManager.branchStatus.remoteMainMsg}"/></td>
+                    <td>&nbsp;</td>
+                </tr>
+            </tbody>                       
+        </table>
+      </h:form>
+
+      <hr/>
+     
+      <div class="row">
+          <h3 class="text-center">Merges</h3>
+      </div>
+      <div class="row">
+          <div class="col-md-1">&nbsp;</div>
+          <div class="col-md-8">
+            <h4>Active merge</h4>
+            <h:form>
+            <h:panelGroup rendered="#{!mergeManager.mergeInProgress}">
+                <p>There is no active merge in progress. To start a new merge click <a href="new-merge.xhtml">here</a>.</p>
+            </h:panelGroup>
+            <h:panelGroup rendered="#{mergeManager.mergeInProgress}">
+                <p>You have an active merge in progress. <h:commandLink value="View" action="#{mergeManager.viewActiveMerge}"/> it.</p>
+            </h:panelGroup>
+            </h:form>
+          </div>
+      </div>
+      <div class="row">
+          <div class="col-md-1">&nbsp;</div>
+          <div class="col-md-8">
+            <h4>Previous merges</h4>
+            <h:form>
+                <ul>
+		            <ui:repeat value="#{mergeManager.allMerges}" var="merge">
+		                <li><h:commandLink value="#{merge.name}" action="#{mergeManager.viewOldMerge(merge.name)}"/> (<h:outputText value="#{merge.stateString}"/>)</li>
+		            </ui:repeat>
+		        </ul>
+            </h:form>
+          </div>
+      </div>
+ 
+   </ui:define>
+</ui:composition>
+</html>
