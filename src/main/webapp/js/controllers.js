@@ -17,4 +17,19 @@ mergeToolControllers.controller('HomeCtrl', ['$scope',
   function($scope) {
   }]);
   
+mergeToolControllers.controller('LoginCtrl', ['$scope', 
+  function($scope) {
+      $scope.failed = false;
+      $scope.user = {};
+      
+      $scope.login = function(user) {
+          var loginsuccess = false;
+          if (loginsuccess) {
+          
+          } else {
+            $scope.failed=true;
+          }
+      }
+  }]);
+  
 

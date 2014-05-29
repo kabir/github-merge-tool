@@ -21,6 +21,10 @@ mergeToolApp.config(['$routeProvider',
         templateUrl: 'partials/home.html',
         controller: 'HomeCtrl'
       }).
+      when('/login', {
+        templateUrl: 'partials/login.html',
+        controller: 'LoginCtrl'
+      }).
       otherwise({
         redirectTo: '/home'
       });

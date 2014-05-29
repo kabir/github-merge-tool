@@ -1,0 +1,31 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+   xmlns:ui="http://java.sun.com/jsf/facelets"
+   xmlns:h="http://java.sun.com/jsf/html"
+   xmlns:f="http://java.sun.com/jsf/core">
+
+<div class="container-fluid">   
+    <div class="row-fluid">
+     <div class="col-md-3"> &nbsp;</div>
+     <div class="col-md-6">
+            <h3 class="text-center">Log in</h3>
+            <p>Please enter your username and password</p> 
+         <form id="loginForm">
+             <div class="form-group">
+                 <label for="username">Username:<label>
+                 <input id="username" styleClass="form-control" ng-model="user.username" value="#{user.username}" />
+             </div>
+             <div class="form-group">
+                 <label for="password">Password:</h:outputLabel>
+                 <input type="password" id="password" styleClass="form-control" ng-model="user.password" value="#{credentials.password}" />
+             </div>
+             <div class="form-group">
+                  <button id="login" styleClass="btn btn-default" action="login(user)">Login</button>
+             </div>
+             <div class="form-group" ng-if="failed">
+                Login Failed
+             </div>
+         </form>
+     </div>
+   </div>
+</div>
