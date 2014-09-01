@@ -2,7 +2,7 @@
 
 /* App Module */
 
-var mergeToolApp = angular.module('mergeToolApp', [
+var mergeToolApp = angular.module('MergeToolApp', [
   'ngRoute',
   /*
   'mergeToolAnimations',
